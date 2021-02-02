@@ -173,6 +173,7 @@ from beancount.core import flags
 from beancount.core import getters
 
 DEBUG = 0
+EPSILON_DELTA = 0.0099
 
 __plugins__ = ('zerosum', 'flag_unmatched',)
 
@@ -202,6 +203,8 @@ def zerosum(entries, options_map, config):
 
       - 'account_name_replace': tuple of two entries. See above
 
+      - 'epsilon_delta': the maximum difference between two matching postings
+
       - 'flag_unmatched': bool to control whether to flag unmatched
         transactions as warnings (default off)
 
@@ -221,7 +224,7 @@ def zerosum(entries, options_map, config):
             if t.date > max_date:
                 return None
             for p in t.postings:
-                if (abs(p.units.number + posting.units.number) < EPSILON_DELTA
+                if (abs(p.units.number + posting.units.number) < epsilon_delta
                     and p.account == zs_account):
                     return (p, t)
         return None
@@ -234,11 +237,11 @@ def zerosum(entries, options_map, config):
     config_obj = literal_eval(config) #TODO: error check
     zs_accounts_list = config_obj.pop('zerosum_accounts', {})
     (account_name_from, account_name_to) = config_obj.pop('account_name_replace', ('', ''))
+    epsilon_delta = config_obj.pop('epsilon_delta', EPSILON_DELTA)
 
     new_accounts = set()
     zerosum_postings_count = 0
     match_count = 0
-    EPSILON_DELTA = 0.0099
 
     # Build zerosum_txns_all for all zs_accounts, so we iterate through entries only once (for performance)
     zerosum_txns_all = defaultdict(list)
