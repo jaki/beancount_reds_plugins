@@ -203,7 +203,7 @@ def zerosum(entries, options_map, config):
 
       - 'account_name_replace': tuple of two entries. See above
 
-      - 'tolerance': the maximum difference between two matching postings
+      - 'tolerance': the maximum cost difference between two matching postings
 
       - 'flag_unmatched': bool to control whether to flag unmatched
         transactions as warnings (default off)
