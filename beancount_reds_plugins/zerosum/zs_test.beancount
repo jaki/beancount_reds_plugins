@@ -7,6 +7,7 @@ plugin "beancount_reds_plugins.zerosum.zerosum" "{
  'Assets:Zero-Sum-Accounts:Returns-and-Temporary'              : ('', 90),
   },
   'account_name_replace' : ('Zero-Sum-Accounts', 'ZSA-Matched'),
+  'tolerance' : 0.0098,
  }"
 
 
